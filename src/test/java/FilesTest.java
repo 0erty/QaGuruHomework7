@@ -5,6 +5,7 @@ import utils.ZipFileDecryptor;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Scanner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,7 +16,13 @@ public class FilesTest {
 
     @Test
     void readTxtFileTest() throws Exception{
-
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("example.txt")) {
+            Scanner myReader = new Scanner(stream);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                assertThat(data).contains("Test text for Homework");
+            }
+        }
     }
 
     @Test
